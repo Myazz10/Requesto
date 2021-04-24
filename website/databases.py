@@ -17,7 +17,7 @@ the database, a AddressNotFoundError will be raised.
 """
 
 
-def city_database(ip_address, visitor):
+def city_database(ip_address, visitor, test_city_data):
     location_info = {}
 
     # This creates a Reader object. You should use the same object
@@ -30,7 +30,7 @@ def city_database(ip_address, visitor):
             # response = reader.city('72.252.231.177')
             response = reader.city(ip_address)
 
-            if visitor.remote_address:
+            """if visitor.remote_address:
                 username = create_excel_city_data(response, visitor.remote_address)
             else:
                 username = create_excel_city_data(response, visitor.ipv4)
@@ -38,6 +38,15 @@ def city_database(ip_address, visitor):
             try:
                 visitor.city_data = File(open(f'{username}_city_data.xlsx', mode='rb'), name=f'{username}_city_data.xlsx')
                 visitor.save()
+                os.remove(f'{username}_city_data.xlsx')
+            except:
+                pass"""
+
+            username = create_excel_city_data(response, visitor.ipv4)
+
+            try:
+                test_city_data.city_data = File(open(f'{username}_city_data.xlsx', mode='rb'), name=f'{username}_city_data.xlsx')
+                test_city_data.save()
                 os.remove(f'{username}_city_data.xlsx')
             except:
                 pass

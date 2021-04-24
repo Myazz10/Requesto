@@ -20,78 +20,10 @@ class VisitorMetaData(models.Model):
         else:
             return self.ipv4
 
-    """all_users_profile = models.CharField(max_length=500, blank=True, null=True)
-    COMMONPROGRAMFILES
-    FPS_BROWSER_USER_PROFILE_STRING
-    COMPUTERNAME:
-    PROGRAMDATA
-    ONLINESERVICES:
-    SYSTEMDRIVE:
-    USERDOMAIN:
-    ONEDRIVECONSUMER
-    ONEDRIVE:
-    TMP:
-    TEMP:
-    PROGRAMFILES:
-    WINDIR:
-    USERDOMAIN_ROAMINGPROFILE:
-    COMSPEC:
-    PROCESSOR_LEVEL
-    NUMBER_OF_PROCESSORS:
-    PROCESSOR_ARCHITECTURE
-    OS
-    ASL.LOG:
-    PROMPT:
-    PROGRAMFILES(X86):
-    PSMODULEPATH:
-    PATHEXT
-    PROCESSOR_IDENTIFIER:
-    REGIONCODE
-    EMAIL_USER:
-    APPDATA:
-    LOCALAPPDATA:
-    SYSTEMROOT
-    HOMEPATH
-    LOGONSERVER:
-    HOMEDRIVE:
-    DRIVERDATA:
-    PATH:
-    PUBLIC:
-    FPS_BROWSER_APP_PROFILE_STRING:
-    PROCESSOR_REVISION:
-    PLATFORMCODE:
-    USERPROFILE:
-    ALLUSERSPROFILE:
-    USERNAME
-    COMMONPROGRAMW6432:
-    PROGRAMW6432:
-    SERVER_NAME:
-    GATEWAY_INTERFACE:
-    SERVER_PORT:
-    REMOTE_HOST
-    CONTENT_LENGTH
-    SCRIPT_NAME
-    SERVER_PROTOCOL:
-    SERVER_SOFTWARE:
-    REQUEST_METHOD:
-    PATH_INFO:
-    REMOTE_ADDR:
-    CONTENT_TYPE:
-    HTTP_HOST:
-    HTTP_CONNECTION:
-    HTTP_CACHE_CONTROL:
-    HTTP_SEC_CH_UA:
-    HTTP_SEC_CH_UA_MOBILE:
-    HTTP_UPGRADE_INSECURE_REQUESTS:
-    HTTP_USER_AGENT:
-    HTTP_ACCEPT:
-    HTTP_SEC_FETCH_SITE:
-    HTTP_SEC_FETCH_MODE:
-    HTTP_SEC_FETCH_USER:
-    HTTP_SEC_FETCH_DEST:
-    HTTP_ACCEPT_ENCODING:
-    HTTP_ACCEPT_LANGUAGE:
-    HTTP_COOKIE:"""
-    pass
+
+class TestMetaData(models.Model):
+    meta_data = models.FileField(upload_to='test_meta/meta_data_files/', blank=True, null=True)
 
 
+class TestCityData(models.Model):
+    city_data = models.FileField(upload_to='test_city/meta_data_files/', blank=True, null=True)

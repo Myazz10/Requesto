@@ -42,10 +42,11 @@ def create_excel_metadata(data):
 
     workbook.close()
 
-    return visitor
+    return str(visitor)
 
 
 def create_excel_city_data(response, username):
+    username = 'test_cd'
     # Create a workbook and add a worksheet.
     workbook = xlsxwriter.Workbook(f'{username}_city_data.xlsx')
     worksheet = workbook.add_worksheet()
