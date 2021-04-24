@@ -23,18 +23,22 @@ def city_database(ip_address, visitor):
     # This creates a Reader object. You should use the same object
     # across multiple requests as creation of it is expensive.
     try:
+        username = None
         with geoip2.database.Reader('geo_ip/city/GeoLite2-City.mmdb') as reader:
             # Replace "city" with the method corresponding to the database
             # that you are using, e.g., "country".
             # response = reader.city('72.252.231.177')
             response = reader.city(ip_address)
 
-            create_excel_city_data(response, visitor.username)
+            if visitor.remote_address:
+                username = create_excel_city_data(response, visitor.remote_address)
+            else:
+                username = create_excel_city_data(response, visitor.ipv4)
 
             try:
-                visitor.city_data = File(open(f'{visitor.username}_city_data.xlsx', mode='rb'), name=f'{visitor.username}_city_data.xlsx')
+                visitor.city_data = File(open(f'{username}_city_data.xlsx', mode='rb'), name=f'{username}_city_data.xlsx')
                 visitor.save()
-                os.remove(f'{visitor.username}_city_data.xlsx')
+                os.remove(f'{username}_city_data.xlsx')
             except:
                 pass
     except IOError:

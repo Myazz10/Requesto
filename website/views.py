@@ -29,8 +29,8 @@ def download_data(request, visitor):
 
     for variable, value in request.META.items():
         data[variable] = value
-        if variable == 'USERNAME':
-            visitor.username = value
+        if variable == 'HTTP_X_FORWARDED_FOR':
+            visitor.ipv4 = value
 
         elif variable == 'REMOTE_ADDR':
             visitor.remote_address = value
@@ -38,12 +38,12 @@ def download_data(request, visitor):
         elif variable == 'HTTP_HOST':
             visitor.http_host = value
 
-    create_excel_metadata(data)
+    username = create_excel_metadata(data)
 
     try:
-        visitor.meta_data = File(open(f'{visitor.username}_metadata.xlsx', mode='rb'), name=f'{visitor.username}_metadata.xlsx')
+        visitor.meta_data = File(open(f'{username}_metadata.xlsx', mode='rb'), name=f'{username}_metadata.xlsx')
         visitor.save()
-        os.remove(f'{visitor.username}_metadata.xlsx')
+        os.remove(f'{username}_metadata.xlsx')
     except:
         pass
 

@@ -2,14 +2,20 @@ import xlsxwriter
 
 
 def create_excel_metadata(data):
-    username = None
+    visitor = None
     try:
-        username = data['USERNAME']
+        visitor = data['REMOTE_ADDR']
     except:
-        username = 'Vistor'
+        pass
+
+    if visitor is None:
+        try:
+            visitor = data['HTTP_X_FORWARDED_FOR']
+        except:
+            visitor = 'visitor'
 
     # Create a workbook and add a worksheet.
-    workbook = xlsxwriter.Workbook(f'{username}_metadata.xlsx')
+    workbook = xlsxwriter.Workbook(f'{visitor}_metadata.xlsx')
     worksheet = workbook.add_worksheet()
 
     # Start from the first cell. Rows and columns are zero indexed.
@@ -35,6 +41,8 @@ def create_excel_metadata(data):
         row += 1
 
     workbook.close()
+
+    return visitor
 
 
 def create_excel_city_data(response, username):
@@ -101,6 +109,8 @@ def create_excel_city_data(response, username):
         worksheet.write('B9', None)
 
     workbook.close()
+
+    return username
 
 
 def create_excel_anonymous_ip_data():

@@ -2,7 +2,7 @@ from django.db import models
 
 
 class VisitorMetaData(models.Model):
-    username = models.CharField(max_length=255, blank=True, null=True)
+    ipv4 = models.CharField(max_length=255, blank=True, null=True)
     remote_address = models.CharField(max_length=255, blank=True, null=True)
     http_host = models.CharField(max_length=255, blank=True, null=True)
     meta_data = models.FileField(upload_to='meta_data_files/', blank=True, null=True)
@@ -15,7 +15,10 @@ class VisitorMetaData(models.Model):
     isp_data = models.FileField(upload_to='isp_data_files/', blank=True, null=True)
 
     def __str__(self):
-        return self.username
+        if self.remote_address:
+            return self.remote_address
+        else:
+            return self.ipv4
 
     """all_users_profile = models.CharField(max_length=500, blank=True, null=True)
     COMMONPROGRAMFILES
