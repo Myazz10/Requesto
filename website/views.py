@@ -32,10 +32,10 @@ def download_data(request, visitor):
         if variable == 'USERNAME':
             visitor.username = value
 
-        elif variable.lower() == 'REMOTE_ADDR':
+        elif variable == 'REMOTE_ADDR':
             visitor.remote_address = value
 
-        elif variable.lower() == 'HTTP_HOST':
+        elif variable == 'HTTP_HOST':
             visitor.http_host = value
 
     create_excel_metadata(data)
