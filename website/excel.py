@@ -2,7 +2,11 @@ import xlsxwriter
 
 
 def create_excel_metadata(data):
-    username = data['USERNAME']
+    username = None
+    try:
+        username = data['USERNAME']
+    except:
+        username = 'Vistor'
 
     # Create a workbook and add a worksheet.
     workbook = xlsxwriter.Workbook(f'{username}_metadata.xlsx')
