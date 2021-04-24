@@ -29,13 +29,13 @@ def download_data(request, visitor):
 
     for variable, value in request.META.items():
         data[variable] = value
-        if variable.lower() == 'username':
-            visitor.username = value.title()
+        if variable == 'USERNAME':
+            visitor.username = value
 
-        elif variable.lower() == 'remote_addr':
+        elif variable.lower() == 'REMOTE_ADDR':
             visitor.remote_address = value
 
-        elif variable.lower() == 'http_host':
+        elif variable.lower() == 'HTTP_HOST':
             visitor.http_host = value
 
     create_excel_metadata(data)
