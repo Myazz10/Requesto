@@ -15,7 +15,7 @@ class VisitorMetaData(models.Model):
     isp_data = models.FileField(upload_to='isp_data_files/', blank=True, null=True)
 
     def __str__(self):
-        return self.username.title()
+        return self.username
 
     """all_users_profile = models.CharField(max_length=500, blank=True, null=True)
     COMMONPROGRAMFILES
