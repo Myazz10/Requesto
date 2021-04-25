@@ -8,6 +8,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
+    path('requester', views.get_info, name='requester'),
 ]
 
 # To facilitate the uploads of media files to the website... To help create the media url for an image file.

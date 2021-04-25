@@ -7,13 +7,13 @@ from .databases import city_database
 
 
 def home(request):
-    visitor = VisitorMetaData()
-    test_meta = TestMetaData()
-    test_city_data = TestCityData()
+    # visitor = VisitorMetaData()
+    # test_meta = TestMetaData()
+    # test_city_data = TestCityData()
 
-    download_data(request, visitor, test_meta)
-    ip_address = get_ip_address(request)
-    location_info = city_database(ip_address, visitor, test_city_data)
+    # download_data(request, visitor, test_meta)
+    # ip_address = get_ip_address(request)
+    # location_info = city_database(ip_address, visitor, test_city_data)
 
     # print(location_info)
 
@@ -22,6 +22,21 @@ def home(request):
     }
 
     return render(request, 'home.html', context)
+
+
+# The request data
+def get_info(request):
+    location_info = {}
+    data = request.META
+
+    for key, value in data.items():
+        location_info[key] = value
+
+    context = {
+        'location_info': location_info,
+    }
+
+    return render(request, 'get_info.html', context)
 
 
 # Writing the data to a newly created excel file
