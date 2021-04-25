@@ -279,32 +279,32 @@ def isp_database(ip_address):
         with geoip2.database.Reader('geo_ip/isp/GeoIP2-ISP-Test.mmdb') as reader:
             response = reader.isp(ip_address)
             try:
-                isp_info[''] = str(response.autonomous_system_number)
+                isp_info['Autonomous System Number'] = str(response.autonomous_system_number)
             except:
                 pass
 
             try:
-                isp_info[''] = str(response.autonomous_system_organization)
+                isp_info['Autonomous System Organization'] = str(response.autonomous_system_organization)
             except:
                 pass
 
             try:
-                isp_info[''] = str(response.isp)
+                isp_info['Internet Service Provider'] = str(response.isp)
             except:
                 pass
 
             try:
-                isp_info[''] = str(response.organization)
+                isp_info['Organization'] = str(response.organization)
             except:
                 pass
 
             try:
-                isp_info[''] = str(response.ip_address)
+                isp_info['IP Address'] = str(response.ip_address)
             except:
                 pass
 
             try:
-                isp_info[''] = str(response.network)
+                isp_info['Network'] = str(response.network)
             except:
                 pass
 
