@@ -23,10 +23,27 @@
     <div class="content-wrap">
         <!-- CONTENT -->
         <div class="content">
+            <p>Your IP Address is: {{ ip_address }}</p>
+            <br/>
 
-            {% for key, value in location_info.items %}
+            <h2>Below is your city info...</h2>
+            {% for key, value in city_info.items %}
                 <p>{{ key }}: {{ value }}</p>
             {% endfor %}
+            <br/>
+            
+            <h2>Below is your isp info...</h2>
+            {% for key, value in isp_info.items %}
+                <p>{{ key }}: {{ value }}</p>
+            {% endfor %}
+            <br/>
+
+            <h2>Below is your anonymous info...</h2>
+            {% for key, value in anonymous_info.items %}
+                <p>{{ key }}: {{ value }}</p>
+            {% endfor %}
+            <br/>
+
 
         </div>
     <!-- CONTENT -->

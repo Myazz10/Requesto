@@ -18,7 +18,7 @@ the database, a AddressNotFoundError will be raised.
 
 
 def city_database(ip_address, visitor, test_city_data):
-    location_info = {}
+    city_info = {}
 
     # This creates a Reader object. You should use the same object
     # across multiple requests as creation of it is expensive.
@@ -29,6 +29,68 @@ def city_database(ip_address, visitor, test_city_data):
             # that you are using, e.g., "country".
             # response = reader.city('72.252.231.177')
             response = reader.city(ip_address)
+            try:
+                city_info['Country ISO Code'] = str(response.country.iso_code)
+            except:
+                pass
+
+            try:
+                city_info['Country Name'] = str(response.country.name)
+            except:
+                pass
+
+            try:
+                city_info['Specific Location'] = str(response.subdivisions.most_specific.name)
+            except:
+                pass
+
+            try:
+                city_info['Specific Location ISO CODE'] = str(response.subdivisions.most_specific.iso_code)
+            except:
+                pass
+
+            try:
+                city_info['City Name'] = str(response.city.name)
+            except:
+                pass
+
+            try:
+                city_info['Postal Code'] = str(response.postal.code)
+            except:
+                pass
+
+            try:
+                city_info['Location: Latitude'] = str(response.location.latitude)
+            except:
+                pass
+
+            try:
+                city_info['Location: Longitude'] = str(response.location.longitude)
+            except:
+                pass
+
+            try:
+                city_info['Traits Network'] = str(response.traits.network)
+            except:
+                pass
+
+            print(response.country.iso_code)
+            'US'
+            print(response.country.name)
+            # 'United States'
+            print(response.subdivisions.most_specific.name)
+            # 'Minnesota'
+            print(response.subdivisions.most_specific.iso_code)
+            # 'MN'
+            print(response.city.name)
+            # 'Minneapolis'
+            print(response.postal.code)
+            # '55455'
+            print(response.location.latitude)
+            # 44.9733
+            print(response.location.longitude)
+            # -93.2323
+            print(response.traits.network)
 
             """if visitor.remote_address:
                 username = create_excel_city_data(response, visitor.remote_address)
@@ -42,52 +104,100 @@ def city_database(ip_address, visitor, test_city_data):
             except:
                 pass"""
 
-            username = create_excel_city_data(response, visitor.ipv4)
+            """username = create_excel_city_data(response, visitor.ipv4)
 
             try:
                 test_city_data.city_data = File(open(f'{username}_city_data.xlsx', mode='rb'), name=f'{username}_city_data.xlsx')
                 test_city_data.save()
                 os.remove(f'{username}_city_data.xlsx')
             except:
-                pass
+                pass"""
     except IOError:
         print('Database not found!\n')
     except Exception:
-        location_info = None
         switch = 1
         print("Error ip used here...\n")
 
-    return location_info
+    return city_info
 
 
 def anonymous_ip_database(ip_address):
+    anonymous_info = {}
     # This creates a Reader object. You should use the same object
     # across multiple requests as creation of it is expensive.
-    with geoip2.database.Reader('geo_ip/anonymous/GeoIP2-Anonymous-IP-Test.mmdb') as reader:
-        response = reader.anonymous_ip('72.252.231.177')
-        print(response.is_anonymous)
-        # True
-        print(response.is_anonymous_vpn)
-        # False
-        print(response.is_hosting_provider)
-        # False
-        print(response.is_public_proxy)
-        # False
-        print(response.is_residential_proxy)
-        # False
-        print(response.is_tor_exit_node)
-        # True
-        print(response.ip_address)
-        # '203.0.113.0'
-        print(response.network)
-        # IPv4Network('203.0.113.0/24')
+    try:
+        with geoip2.database.Reader('geo_ip/anonymous/GeoIP2-Anonymous-IP-Test.mmdb') as reader:
+            response = reader.anonymous_ip(ip_address)
+            try:
+                anonymous_info['Is Anonymous'] = str(response.is_anonymous)
+            except:
+                pass
+
+            try:
+                anonymous_info['Is Anonymous VPN'] = str(response.is_anonymous_vpn)
+            except:
+                pass
+
+            try:
+                anonymous_info['Is Hosting Provider'] = str(response.is_hosting_provider)
+            except:
+                pass
+
+            try:
+                anonymous_info['Is Public Proxy'] = str(response.is_public_proxy)
+            except:
+                pass
+
+            try:
+                anonymous_info['Is Residential Proxy'] = str(response.is_residential_proxy)
+            except:
+                pass
+
+            try:
+                anonymous_info['Is Tor Exit Node'] = str(response.is_tor_exit_node)
+            except:
+                pass
+
+            try:
+                anonymous_info['IP Address'] = str(response.ip_address)
+            except:
+                pass
+
+            try:
+                anonymous_info['Network'] = str(response.network)
+            except:
+                pass
+
+            print(response.is_anonymous)
+            # True
+            print(response.is_anonymous_vpn)
+            # False
+            print(response.is_hosting_provider)
+            # False
+            print(response.is_public_proxy)
+            # False
+            print(response.is_residential_proxy)
+            # False
+            print(response.is_tor_exit_node)
+            # True
+            print(response.ip_address)
+            # '203.0.113.0'
+            print(response.network)
+            # IPv4Network('203.0.113.0/24')
+    except IOError:
+        print('Database not found!\n')
+    except Exception:
+        print("Error ip used here...\n")
+
+    return anonymous_info
 
 
 def asn_database(ip_address):
+    asn_info = {}
     # This creates a Reader object. You should use the same object
     # across multiple requests as creation of it is expensive.
     with geoip2.database.Reader('geo_ip/asn/GeoLite2-ASN.mmdb') as reader:
-        response = reader.asn('72.252.231.177')
+        response = reader.asn(ip_address)
         print(response.autonomous_system_number)
         # 1221
         print(response.autonomous_system_organization)
@@ -97,12 +207,14 @@ def asn_database(ip_address):
         print(response.network)
         # IPv4Network('203.0.113.0/24')
 
+    return asn_info
+
 
 def connection_type_database(ip_address):
     # This creates a Reader object. You should use the same object
     # across multiple requests as creation of it is expensive.
     with geoip2.database.Reader('geo_ip/connection-type/GeoIP2-Connection-Type-Test.mmdb') as reader:
-        response = reader.connection_type('72.252.231.177')
+        response = reader.connection_type(ip_address)
         print(response.connection_type)
         # 'Corporate'
         print(response.ip_address)
@@ -115,7 +227,7 @@ def domain_database(ip_address):
     # This creates a Reader object. You should use the same object
     # across multiple requests as creation of it is expensive.
     with geoip2.database.Reader('geo_ip/domain/GeoIP2-Domain-Test.mmdb') as reader:
-        response = reader.domain('72.252.231.177')
+        response = reader.domain(ip_address)
         print(response.domain)
         # 'umn.edu'
         print(response.ip_address)
@@ -127,7 +239,7 @@ def enterprise_database(ip_address):
     # across multiple requests as creation of it is expensive.
     with geoip2.database.Reader('geo_ip/enterprise/GeoIP2-Enterprise-Test.mmdb') as reader:
         # Use the .enterprise method to do a lookup in the Enterprise database
-        response = reader.enterprise('72.252.231.177')
+        response = reader.enterprise(ip_address)
 
         print(response.country.confidence)
         # 99
@@ -160,19 +272,57 @@ def enterprise_database(ip_address):
 
 
 def isp_database(ip_address):
+    isp_info = {}
     # This creates a Reader object. You should use the same object
     # across multiple requests as creation of it is expensive.
-    with geoip2.database.Reader('geo_ip/isp/GeoIP2-ISP-Test.mmdb') as reader:
-        response = reader.isp('72.252.231.177')
-        print(response.autonomous_system_number)
-        # 1221
-        print(response.autonomous_system_organization)
-        # 'Telstra Pty Ltd'
-        print(response.isp)
-        # 'Telstra Internet'
-        print(response.organization)
-        # 'Telstra Internet'
-        print(response.ip_address)
-        # '203.0.113.0'
-        print(response.network)
-        # IPv4Network('203.0.113.0/24')
+    try:
+        with geoip2.database.Reader('geo_ip/isp/GeoIP2-ISP-Test.mmdb') as reader:
+            response = reader.isp(ip_address)
+            try:
+                isp_info[''] = str(response.autonomous_system_number)
+            except:
+                pass
+
+            try:
+                isp_info[''] = str(response.autonomous_system_organization)
+            except:
+                pass
+
+            try:
+                isp_info[''] = str(response.isp)
+            except:
+                pass
+
+            try:
+                isp_info[''] = str(response.organization)
+            except:
+                pass
+
+            try:
+                isp_info[''] = str(response.ip_address)
+            except:
+                pass
+
+            try:
+                isp_info[''] = str(response.network)
+            except:
+                pass
+
+            print(response.autonomous_system_number)
+            # 1221
+            print(response.autonomous_system_organization)
+            # 'Telstra Pty Ltd'
+            print(response.isp)
+            # 'Telstra Internet'
+            print(response.organization)
+            # 'Telstra Internet'
+            print(response.ip_address)
+            # '203.0.113.0'
+            print(response.network)
+            # IPv4Network('203.0.113.0/24')
+    except IOError:
+        print('Database not found!\n')
+    except Exception:
+        print("Error ip used here...\n")
+
+    return isp_info

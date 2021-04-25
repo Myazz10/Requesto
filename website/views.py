@@ -3,7 +3,7 @@ from django.shortcuts import render
 from .excel import create_excel_metadata
 from .models import VisitorMetaData, TestCityData, TestMetaData
 from django.core.files import File
-from .databases import city_database
+from .databases import city_database, anonymous_ip_database, isp_database
 
 
 def home(request):
@@ -26,6 +26,7 @@ def home(request):
 
 # The request data
 def get_info(request):
+    ip_address = get_ip_address(request)
     location_info = {}
     data = request.META
 
@@ -34,6 +35,10 @@ def get_info(request):
 
     context = {
         'location_info': location_info,
+        'ip_address': ip_address,
+        'city_info': city_database(ip_address, '', ''),
+        'anonymous_info': anonymous_ip_database(ip_address),
+        'isp_info': isp_database(ip_address),
     }
 
     return render(request, 'get_info.html', context)
