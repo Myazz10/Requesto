@@ -49,7 +49,24 @@
                 <p>{{ key }}: {{ value }}</p>
             {% endfor %}
             <br/>
+        
+            <h2>Below is your connection type info...</h2>
+            {% for key, value in connection_type_info.items %}
+                <p>{{ key }}: {{ value }}</p>
+            {% endfor %}
+            <br/>
 
+            <h2>Below is your enterprise info...</h2>
+            {% for key, value in enterprise_info.items %}
+                <p>{{ key }}: {{ value }}</p>
+            {% endfor %}
+            <br/>
+
+            <h2>Below is your domain info...</h2>
+            {% for key, value in domain_info.items %}
+                <p>{{ key }}: {{ value }}</p>
+            {% endfor %}
+            <br/>
 
         </div>
     <!-- CONTENT -->

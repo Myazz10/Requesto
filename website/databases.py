@@ -367,7 +367,7 @@ def enterprise_database(ip_address):
                 enterprise_info['Traits Network'] = str(response.traits.network)
             except:
                 pass
-            
+
             print(response.country.confidence)
             # 99
             print(response.country.iso_code)
