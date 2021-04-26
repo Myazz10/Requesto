@@ -196,16 +196,41 @@ def asn_database(ip_address):
     asn_info = {}
     # This creates a Reader object. You should use the same object
     # across multiple requests as creation of it is expensive.
-    with geoip2.database.Reader('geo_ip/asn/GeoLite2-ASN.mmdb') as reader:
-        response = reader.asn(ip_address)
-        print(response.autonomous_system_number)
-        # 1221
-        print(response.autonomous_system_organization)
-        # 'Telstra Pty Ltd'
-        print(response.ip_address)
-        # '203.0.113.0'
-        print(response.network)
-        # IPv4Network('203.0.113.0/24')
+    try:
+        with geoip2.database.Reader('geo_ip/asn/GeoLite2-ASN.mmdb') as reader:
+            response = reader.asn(ip_address)
+            try:
+                asn_info['System Number'] = str(response.autonomous_system_number)
+            except:
+                pass
+
+            try:
+                asn_info['System Organization'] = str(response.autonomous_system_organization)
+            except:
+                pass
+
+            try:
+                asn_info['IP Address'] = str(response.ip_address)
+            except:
+                pass
+
+            try:
+                asn_info['Network'] = str(response.network)
+            except:
+                pass
+
+            print(response.autonomous_system_number)
+            # 1221
+            print(response.autonomous_system_organization)
+            # 'Telstra Pty Ltd'
+            print(response.ip_address)
+            # '203.0.113.0'
+            print(response.network)
+            # IPv4Network('203.0.113.0/24')
+    except IOError:
+        print('Database not found!\n')
+    except Exception:
+        print("Error ip used here...\n")
 
     return asn_info
 
