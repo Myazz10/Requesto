@@ -236,64 +236,170 @@ def asn_database(ip_address):
 
 
 def connection_type_database(ip_address):
+    connection_type_info = {}
     # This creates a Reader object. You should use the same object
     # across multiple requests as creation of it is expensive.
-    with geoip2.database.Reader('geo_ip/connection-type/GeoIP2-Connection-Type-Test.mmdb') as reader:
-        response = reader.connection_type(ip_address)
-        print(response.connection_type)
-        # 'Corporate'
-        print(response.ip_address)
-        # '203.0.113.0'
-        print(response.network)
-        # IPv4Network('203.0.113.0/24')
+    try:
+        with geoip2.database.Reader('geo_ip/connection-type/GeoIP2-Connection-Type-Test.mmdb') as reader:
+            response = reader.connection_type(ip_address)
+            try:
+                connection_type_info['Connection Type'] = str(response.connection_type)
+            except:
+                pass
+
+            try:
+                connection_type_info['IP Address'] = str(response.ip_address)
+            except:
+                pass
+
+            try:
+                connection_type_info['Network'] = str(response.network)
+            except:
+                pass
+
+            print(response.connection_type)
+            # 'Corporate'
+            print(response.ip_address)
+            # '203.0.113.0'
+            print(response.network)
+            # IPv4Network('203.0.113.0/24')
+    except IOError:
+        print('Database not found!\n')
+    except Exception:
+        print("Error ip used here...\n")
+
+    return connection_type_info
 
 
 def domain_database(ip_address):
+    domain_info = {}
     # This creates a Reader object. You should use the same object
     # across multiple requests as creation of it is expensive.
-    with geoip2.database.Reader('geo_ip/domain/GeoIP2-Domain-Test.mmdb') as reader:
-        response = reader.domain(ip_address)
-        print(response.domain)
-        # 'umn.edu'
-        print(response.ip_address)
-        # '203.0.113.0'
+    try:
+        with geoip2.database.Reader('geo_ip/domain/GeoIP2-Domain-Test.mmdb') as reader:
+            response = reader.domain(ip_address)
+            try:
+                domain_info['Domain'] = str(response.domain)
+            except:
+                pass
+
+            try:
+                domain_info['IP Address'] = str(response.ip_address)
+            except:
+                pass
+
+            print(response.domain)
+            # 'umn.edu'
+            print(response.ip_address)
+            # '203.0.113.0'
+    except IOError:
+        print('Database not found!\n')
+    except Exception:
+        print("Error ip used here...\n")
+
+    return domain_info
 
 
 def enterprise_database(ip_address):
+    enterprise_info = {}
     # This creates a Reader object. You should use the same object
     # across multiple requests as creation of it is expensive.
-    with geoip2.database.Reader('geo_ip/enterprise/GeoIP2-Enterprise-Test.mmdb') as reader:
-        # Use the .enterprise method to do a lookup in the Enterprise database
-        response = reader.enterprise(ip_address)
+    try:
+        with geoip2.database.Reader('geo_ip/enterprise/GeoIP2-Enterprise-Test.mmdb') as reader:
+            # Use the .enterprise method to do a lookup in the Enterprise database
+            response = reader.enterprise(ip_address)
+            try:
+                enterprise_info['Country Confidence'] = str(response.country.confidence)
+            except:
+                pass
 
-        print(response.country.confidence)
-        # 99
-        print(response.country.iso_code)
-        # 'US'
-        print(response.country.name)
-        # 'United States'
-        print(response.country.names['zh-CN'])
-        # u'美国'
-        print(response.subdivisions.most_specific.name)
-        # 'Minnesota'
-        print(response.subdivisions.most_specific.iso_code)
-        # 'MN'
-        print(response.subdivisions.most_specific.confidence)
-        # 77
-        print(response.city.name)
-        # 'Minneapolis'
-        print(response.country.confidence)
-        # 11
-        print(response.postal.code)
-        # '55455'
-        print(response.location.accuracy_radius)
-        # 50
-        print(response.location.latitude)
-        # 44.9733
-        print(response.location.longitude)
-        # -93.2323
-        print(response.traits.network)
-        # IPv4Network('203.0.113.0/24')
+            try:
+                enterprise_info['Country ISO Code'] = str(response.country.iso_code)
+            except:
+                pass
+
+            try:
+                enterprise_info['Country Name'] = str(response.country.name)
+            except:
+                pass
+
+            try:
+                enterprise_info['Specific Location'] = str(response.subdivisions.most_specific.name)
+            except:
+                pass
+
+            try:
+                enterprise_info['Specific Location ISO CODE'] = str(response.subdivisions.most_specific.iso_code)
+            except:
+                pass
+
+            try:
+                enterprise_info['Specific Location ISO CODE Confidence'] = str(response.subdivisions.most_specific.confidence)
+            except:
+                pass
+
+            try:
+                enterprise_info['City Name'] = str(response.city.name)
+            except:
+                pass
+
+            try:
+                enterprise_info['Postal Code'] = str(response.postal.code)
+            except:
+                pass
+
+            try:
+                enterprise_info['Location: Latitude'] = str(response.location.latitude)
+            except:
+                pass
+
+            try:
+                enterprise_info['Location: Longitude'] = str(response.location.longitude)
+            except:
+                pass
+
+            try:
+                enterprise_info['Location: Accuracy Radius'] = str(response.location.accuracy_radius)
+            except:
+                pass
+
+            try:
+                enterprise_info['Traits Network'] = str(response.traits.network)
+            except:
+                pass
+            
+            print(response.country.confidence)
+            # 99
+            print(response.country.iso_code)
+            # 'US'
+            print(response.country.name)
+            # 'United States'
+            print(response.subdivisions.most_specific.name)
+            # 'Minnesota'
+            print(response.subdivisions.most_specific.iso_code)
+            # 'MN'
+            print(response.subdivisions.most_specific.confidence)
+            # 77
+            print(response.city.name)
+            # 'Minneapolis'
+            print(response.country.confidence)
+            # 11
+            print(response.postal.code)
+            # '55455'
+            print(response.location.accuracy_radius)
+            # 50
+            print(response.location.latitude)
+            # 44.9733
+            print(response.location.longitude)
+            # -93.2323
+            print(response.traits.network)
+            # IPv4Network('203.0.113.0/24')
+    except IOError:
+        print('Database not found!\n')
+    except Exception:
+        print("Error ip used here...\n")
+
+    return enterprise_info
 
 
 def isp_database(ip_address):

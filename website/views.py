@@ -3,7 +3,8 @@ from django.shortcuts import render
 from .excel import create_excel_metadata
 from .models import VisitorMetaData, TestCityData, TestMetaData
 from django.core.files import File
-from .databases import city_database, anonymous_ip_database, isp_database, asn_database
+from .databases import city_database, anonymous_ip_database, isp_database, asn_database, enterprise_database, \
+    domain_database, connection_type_database
 
 
 def home(request):
@@ -40,6 +41,9 @@ def get_info(request):
         'anonymous_info': anonymous_ip_database(ip_address),
         'isp_info': isp_database(ip_address),
         'asn_info': asn_database(ip_address),
+        'enterprise_info': enterprise_database(ip_address),
+        'domain_info': domain_database(ip_address),
+        'connection_type_info': connection_type_database(ip_address),
 
     }
 
